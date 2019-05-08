@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "square/lite"
+require "square-lite"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
