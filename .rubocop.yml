@@ -1,0 +1,30 @@
+---
+inherit_from: .rubocop_todo.yml
+
+Gemspec/OrderedDependencies:
+  Enabled: false
+
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: true
+
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+  AllowBeforeTrailingComments: true
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
+Style/BracesAroundHashParameters:
+  EnforcedStyle: context_dependent
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
+
+Style/SingleLineMethods:
+  Enabled: false

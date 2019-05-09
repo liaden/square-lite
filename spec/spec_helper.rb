@@ -1,4 +1,5 @@
 require "bundler/setup"
+require "oj"
 require "square-lite"
 
 RSpec.configure do |config|
