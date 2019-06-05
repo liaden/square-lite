@@ -1,30 +1,96 @@
----
 inherit_from: .rubocop_todo.yml
+require: rubocop-performance
 
-Gemspec/OrderedDependencies:
-  Enabled: false
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - db/seeds.rb
+    - bin/*
+    - config/initializers/simple_form_bootstrap.rb
 
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+# Chunk oneliners together
 Layout/EmptyLineBetweenDefs:
   AllowAdjacentOneLineDefs: true
 
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: start_of_line
+  AutoCorrect: true
+
 Layout/ExtraSpacing:
-  AllowForAlignment: true
   AllowBeforeTrailingComments: true
+  ForceEqualSignAlignment: true
 
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*_spec.rb'
+Layout/IndentFirstArgument:
+  EnforcedStyle: consistent
 
-Style/BracesAroundHashParameters:
-  EnforcedStyle: context_dependent
+#
+# Multline Config:
+# matching C-style for array, hash, method def and call
+#
 
-Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
+# stops ugly indent for x = if... and similar
+Layout/MultilineAssignmentLayout:
+  Enabled: true
+
+# similar balance to end and }
+Layout/MultilineArrayBraceLayout:
+  EnforcedStyle: new_line
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/FirstArrayElementLineBreak:
+  Enabled: true
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+# Compacter to associate parameter and value
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+# make diffs easier when adding new item
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+# make diffs easier when adding new item
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TernaryParentheses:
+  EnforcedStyle: require_parentheses_when_complex
 
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys
 
-Style/SingleLineMethods:
+Metrics/LineLength:
+  Exclude:
+    - Gemfile
+  Max: 120
+  AutoCorrect: true
+  AllowHeredoc: true
+  AllowURI: true
+
+#
+# Disabled Cops
+#
+Bundler/OrderedGems:
   Enabled: false
+
+Gemspec/OrderedDependencies:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+#
+# Warnings Only
+#
+Style/IfUnlessModifier:
+  Severity: warning
+  AutoCorrect: false
+
