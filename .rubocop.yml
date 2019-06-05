@@ -1,3 +1,4 @@
+---
 inherit_from: .rubocop_todo.yml
 require: rubocop-performance
 
@@ -57,6 +58,9 @@ Layout/SpaceAroundEqualsInParameterDefault:
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 # make diffs easier when adding new item
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
@@ -94,3 +98,10 @@ Style/IfUnlessModifier:
   Severity: warning
   AutoCorrect: false
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Metrics/ParameterLists:
+  Exclude:
+    - spec/**/*

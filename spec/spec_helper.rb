@@ -1,10 +1,18 @@
-require "bundler/setup"
-require "oj"
-require "square-lite"
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'oj'
+require 'webmock/rspec'
+require 'square-lite'
+
+require 'pry'
+require 'active_support/core_ext/hash'
+
+Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
-  config.example_status_persistence_file_path = ".rspec_status"
+  config.example_status_persistence_file_path = '.rspec_status'
 
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
