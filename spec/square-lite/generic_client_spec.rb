@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-RSpec.describe SquareLite::RequestBuilder do
+RSpec.describe SquareLite::GenericClient do
   let(:version)  { '2.20190508.0' }
-  let(:builder)  { SquareLite::RequestBuilder.new(version, build_auth) }
-  let(:req)      { builder.build(:get, path) }
+  let(:client)  { SquareLite::GenericClient.new(version, build_auth) }
+  let(:req)      { client.request(:get, path) }
   let(:response) { req.run }
   let(:path)     { 'v2/catalog/info' }
   let(:json)     { JSON.parse(response.body) }

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe SquareLite::RequestBuilder::Auth do
+RSpec.describe SquareLite::GenericClient::Auth do
   context 'http_basic_auth' do
   end
 

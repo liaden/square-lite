@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'request_builder'
+require_relative 'generic_client'
 
 class SquareLite::Client
   attr_accessor :access_token, :version
@@ -15,12 +15,12 @@ class SquareLite::Client
   end
 
   def search(options={ for: [] })
-    SquareLite::Search.new(*options[:for], as: request_builder)
+    SquareLite::Search.new(*Array(options[:for]), as: generic_client)
   end
 
   private
 
-  def request_builder
-    SquareLite::RequestBuilder.new(@version, SquareLite::RequestBuilder::Auth.new(access_token: @access_token))
+  def generic_client
+    SquareLite::GenericClient.new(@version, SquareLite::GenericClient::Auth.new(access_token: @access_token))
   end
 end

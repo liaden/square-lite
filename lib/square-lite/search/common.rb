@@ -13,7 +13,7 @@ class SquareLite::Search
     def fetch!
       validate!
 
-      JSON.parse(requester.build(self.class.verb, path, params: @params).run.body)
+      JSON.parse(requester.request(self.class.verb, path, params: @params).run.body)
     end
 
     def validate!; end

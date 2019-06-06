@@ -20,7 +20,7 @@ end
 def expect_req_body(request, params)
   request.with do |r|
     if r.body
-      expect(JSON.parse(r.body)).to include(params)
+      expect(JSON.parse(r.body)).to include(params.stringify_keys)
     else
       expect(params).to be_nil
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def build_auth
-  SquareLite::RequestBuilder::Auth.new(access_token: test_token)
+  SquareLite::GenericClient::Auth.new(access_token: test_token)
 end
 
 def wm_auth

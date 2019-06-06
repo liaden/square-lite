@@ -3,7 +3,7 @@
 require 'typhoeus'
 
 module SquareLite
-  class RequestBuilder
+  class GenericClient
     attr_accessor :default_headers, :user_agent
 
     BASE_URL = 'https://connect.squareup.com/'
@@ -18,42 +18,46 @@ module SquareLite
       }.merge(auth.headers)
     end
 
-    def build(http_method, path, opts={})
-      url         = build_request_url(path)
-      http_method = http_method.to_sym.downcase
-
-      header_params = default_headers.merge(opts[:header_params] || {})
+    def request(http_method, path, opts={})
+      url = build_request_url(path)
 
       req_opts = {
-        method:         http_method,
-        headers:        header_params,
+        method:         http_method.to_sym.downcase,
+        headers:        header_params(opts),
         timeout:        opts[:timeout] || SquareLite.conf.timeout,
         ssl_verifypeer: 'true',
         ssl_verifyhost: 'true',
         verbose:        SquareLite.debug?,
       }
-
-      if http_method == :get
-        req_opts[:params] = opts[:params]
-      else
-        req_opts[:body] = build_request_body(opts[:params])
-      end
+      insert_params(req_opts, opts[:params])
 
       Typhoeus::Request.new(url, req_opts)
     end
 
     private
 
+    def header_params(opts)
+      default_headers.merge(opts[:header_params] || {})
+    end
+
+    def insert_params(req_opts, params)
+      if req_opts[:method] == :get
+        req_opts[:params] = params
+      else
+        req_opts[:body] = build_request_body(params)
+      end
+    end
+
     def build_request_url(path)
       BASE_URL + path
     end
 
     def build_request_body(data)
-      return if data.nil?
+      return data if data.nil? || data.is_a?(String)
 
-      data.to_json unless data.is_a?(String)
+      data.to_json
     end
   end
 end
 
-require_relative 'request_builder/auth'
+require_relative 'generic_client/auth'
