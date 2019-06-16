@@ -8,7 +8,13 @@ module SquareLite
 
     BASE_URL = 'https://connect.squareup.com/'
 
+    def self.paginated(version, auth)
+      new(version, auth).tap(&:auto_paginate!)
+    end
+
     def initialize(version, auth)
+      version ||= SquareLite::SQUARE_API_VERSION
+
       self.user_agent = "Square-Connect-Ruby/#{version}"
 
       self.default_headers = {
@@ -19,7 +25,8 @@ module SquareLite
     end
 
     def request(http_method, path, opts={})
-      url = build_request_url(path)
+      url      = build_request_url(path)
+      paginate = opts.delete(:paginate)
 
       req_opts = {
         method:         http_method.to_sym.downcase,
@@ -31,7 +38,18 @@ module SquareLite
       }
       insert_params(req_opts, opts[:params])
 
-      Typhoeus::Request.new(url, req_opts)
+      request = Typhoeus::Request.new(url, req_opts)
+      return request unless paginate || auto_paginate?
+
+      Cursor.new(request, opts[:params])
+    end
+
+    def auto_paginate!
+      @paginate = true
+    end
+
+    def auto_paginate?
+      @paginate
     end
 
     private
@@ -61,3 +79,5 @@ module SquareLite
 end
 
 require_relative 'generic_client/auth'
+require_relative 'generic_client/cursor'
+require_relative 'generic_client/errors'

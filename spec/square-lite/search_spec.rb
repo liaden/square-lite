@@ -100,7 +100,6 @@ RSpec.describe SquareLite::Search do
     let(:request_params) { nil }
 
     after  { expect(request).to have_been_made }
-    before { request_params&.deep_stringify_keys! }
     before { expect_req_body(request, request_params) }
 
     describe '#id!' do

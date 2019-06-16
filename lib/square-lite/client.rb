@@ -21,6 +21,6 @@ class SquareLite::Client
   private
 
   def generic_client
-    SquareLite::GenericClient.new(@version, SquareLite::GenericClient::Auth.new(access_token: @access_token))
+    SquareLite::GenericClient.paginated(@version, SquareLite::GenericClient::Auth.new(access_token: @access_token))
   end
 end

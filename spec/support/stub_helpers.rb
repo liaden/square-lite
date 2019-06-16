@@ -20,12 +20,19 @@ end
 def expect_req_body(request, params)
   request.with do |r|
     if r.body
-      expect(JSON.parse(r.body)).to include(params.stringify_keys)
+      expect(JSON.parse(r.body)).to include(params.deep_stringify_keys)
     else
       expect(params).to be_nil
     end
   end
 end
+
+def build_body(cursor: nil, errors: [], **data)
+  data['cursor'] = cursor if cursor
+  data['errors'] = errors
+  data
+end
+
 
 def json_headers
   { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }

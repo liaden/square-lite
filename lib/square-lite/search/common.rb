@@ -10,10 +10,14 @@ class SquareLite::Search
       self.params = params.slice(*self.class.expected_params)
     end
 
-    def fetch!
+    def run
       validate!
 
-      JSON.parse(requester.request(self.class.verb, path, params: @params).run.body)
+      requester.request(self.class.verb, path, params: @params)
+    end
+
+    def fetch!
+      run.to_a
     end
 
     def validate!; end
