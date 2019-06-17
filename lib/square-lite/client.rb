@@ -18,6 +18,10 @@ class SquareLite::Client
     SquareLite::Search.new(*Array(options[:for]), as: generic_client)
   end
 
+  def delete
+    SquareLite::Delete.new(generic_client, search)
+  end
+
   private
 
   def generic_client

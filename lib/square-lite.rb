@@ -3,10 +3,6 @@
 require 'logger'
 require 'gem_config'
 
-require_relative 'square-lite/client'
-require_relative 'square-lite/search'
-require_relative 'square-lite/version'
-
 module SquareLite
   include GemConfig::Base
 
@@ -40,4 +36,12 @@ module SquareLite
     MODIFIER
     MODIFIER_LIST
   ].map(&:freeze).freeze
+
+  class Error < RuntimeError; end
 end
+
+require_relative 'square-lite/client'
+require_relative 'square-lite/delete'
+require_relative 'square-lite/search'
+require_relative 'square-lite/version'
+
