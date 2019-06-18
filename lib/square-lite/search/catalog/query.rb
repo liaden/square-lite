@@ -29,7 +29,7 @@ class SquareLite::Search::Catalog
     end
 
     def types=(val)
-      params[:object_types] = val.join(',')
+      params[:object_types] = val
     end
   end
 end

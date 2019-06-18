@@ -10,7 +10,7 @@ end
 
 def prefix_query_params
   {
-    object_types: 'ITEM',
+    object_types: ['ITEM'],
     query:        {
       prefix_query: {
         attribute_name:   'name',

@@ -137,7 +137,7 @@ RSpec.describe SquareLite::Search do
 
       let(:request_params) do
         {
-          object_types: 'ITEM',
+          object_types: ['ITEM'],
           query:        {
             exact_query: {
               attribute_name:  'name',
@@ -186,7 +186,7 @@ RSpec.describe SquareLite::Search do
       context 'infinite lower bound' do
         let(:request_params) do
           {
-            object_types: 'ITEM',
+            object_types: ['ITEM'],
             query:        {
               sorted_attribute_query: {
                 attribute_name:          'quantity',
@@ -205,7 +205,7 @@ RSpec.describe SquareLite::Search do
       context 'infinite upper bound' do
         let(:request_params) do
           {
-            object_types: 'ITEM',
+            object_types: ['ITEM'],
             query:        {
               sorted_attribute_query: {
                 attribute_name:          'quantity',
@@ -224,7 +224,7 @@ RSpec.describe SquareLite::Search do
       context 'finite bounds' do
         let(:request_params) do
           {
-            object_types: 'ITEM',
+            object_types: ['ITEM'],
             query:        {
               range_query: {
                 attribute_name:      'quantity',
@@ -264,7 +264,7 @@ RSpec.describe SquareLite::Search do
 
       let(:request_params) do
         {
-          object_types: 'ITEM',
+          object_types: ['ITEM'],
           query:        {
             sorted_attribute_query: {
               attribute_name: 'name',

@@ -3,7 +3,7 @@
 class SquareLite::Search
   module ForTypes
     def for(*types)
-      self. types = processed_types = types.map(&:to_s).map(&:upcase)
+      self.types = processed_types = types.map(&:to_s).map(&:upcase)
 
       if types == ['ORDER']
         # TODO
