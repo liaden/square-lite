@@ -66,7 +66,7 @@ class SquareLite::GenericClient
 
     def params_from_request
       if http_method == :get
-        @request.options[:params]
+        @request.options[:params] || {}
       else
         body = @request.options[:body]
         if body.is_a?(String)

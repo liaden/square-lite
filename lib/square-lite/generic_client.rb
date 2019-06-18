@@ -29,12 +29,14 @@ module SquareLite
       paginate = opts.delete(:paginate)
 
       req_opts = {
-        method:         http_method.to_sym.downcase,
-        headers:        header_params(opts),
-        timeout:        opts[:timeout] || SquareLite.conf.timeout,
-        ssl_verifypeer: 'true',
-        ssl_verifyhost: 'true',
-        verbose:        SquareLite.debug?,
+        method:          http_method.to_sym.downcase,
+        headers:         header_params(opts),
+        timeout:         opts[:timeout] || SquareLite.conf.timeout,
+        ssl_verifypeer:  'true',
+        ssl_verifyhost:  'true',
+        # https://github.com/typhoeus/typhoeus#compression
+        accept_encoding: 'gzip',
+        verbose:         SquareLite.debug?,
       }
       insert_params(req_opts, opts[:params])
 
