@@ -40,6 +40,7 @@ module SquareLite
       }
       insert_params(req_opts, opts[:params])
 
+      puts "Request options: #{req_opts}" if SquareLite.debug?
       request = Typhoeus::Request.new(url, req_opts)
       return request unless paginate || auto_paginate?
 
