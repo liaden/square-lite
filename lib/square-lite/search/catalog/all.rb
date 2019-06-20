@@ -11,9 +11,5 @@ class SquareLite::Search::Catalog
     def path
       'v2/catalog/list'
     end
-
-    def types=(val)
-      params[:types] = val.join(',')
-    end
   end
 end

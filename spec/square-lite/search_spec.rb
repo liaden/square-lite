@@ -25,11 +25,11 @@ RSpec.describe SquareLite::Search do
         end
       end
 
-      context 'is missing' do
+      context 'is unspecified' do
         context 'query search' do
           let(:query) { search.for.exactly(name: :things_name) }
 
-          it { is_expected.to raise_error SquareLite::MissingForTypeError }
+          it { is_expected.to_not raise_error }
         end
 
         context 'all search' do

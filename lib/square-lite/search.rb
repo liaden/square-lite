@@ -55,9 +55,15 @@ class SquareLite::Search
   end
 
   def types=(val)
-    @types                = val
-    params[:types]        = val.join(',')
-    params[:object_types] = val
+    @types =
+      if val.empty?
+        SquareLite::CATALOG_TYPES
+      else
+        val
+      end
+
+    params[:types]        = @types.join(',')
+    params[:object_types] = @types
   end
 
   def starts_with(data)
