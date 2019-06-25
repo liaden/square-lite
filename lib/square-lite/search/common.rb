@@ -10,14 +10,18 @@ class SquareLite::Search
       self.params = params.slice(*self.class.expected_params)
     end
 
-    def run
+    def request
       validate!
 
       requester.request(self.class.verb, path, params: @params)
     end
 
+    def each(&block)
+      request.each(&block)
+    end
+
     def fetch!
-      run.to_a
+      request.to_a
     end
 
     def validate!; end
@@ -32,6 +36,7 @@ class SquareLite::Search
 
     def self.included(base)
       base.extend(ClassMethods)
+      base.include(Enumerable)
       base.verb = :post
     end
   end
