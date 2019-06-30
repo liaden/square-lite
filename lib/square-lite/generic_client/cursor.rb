@@ -37,6 +37,12 @@ class SquareLite::GenericClient
       end
     end
 
+    def reload
+      @next_page = {}
+      delete_cursor_param
+      self
+    end
+
     private
 
     def next_page(cursor)
@@ -85,6 +91,15 @@ class SquareLite::GenericClient
       return unless cursor
 
       @params['cursor'] = cursor
+      set_req_params
+    end
+
+    def delete_cursor_param
+      @params.delete('cursor')
+      set_req_params
+    end
+
+    def set_req_params
       if http_method == :get
         @request.options[:params] = @params
       else

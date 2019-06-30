@@ -13,7 +13,6 @@ RSpec.describe SquareLite::GenericClient::Cursor do
   let(:object)  { { object:  [name: 'object_name'] } }
   let(:related) { { related_objects: [{ id: 'related_obj_id' }] } }
 
-
   describe 'iterates' do
     let!(:request) { stub_sq(path, :post, body: resp_body) }
 
@@ -22,7 +21,7 @@ RSpec.describe SquareLite::GenericClient::Cursor do
 
       it 'yields object data' do
         cursor.each do |data|
-          expect(data).to eq({'name' => 'object_name1'})
+          expect(data).to eq('name' => 'object_name1')
         end
       end
 
@@ -30,19 +29,28 @@ RSpec.describe SquareLite::GenericClient::Cursor do
         let(:objects) do
           { objects: [
             { name: 'object_name1' },
-            { name: 'object_name2' }
-          ]}
+            { name: 'object_name2' },
+          ] }
         end
 
         it 'yields all objects in response' do
           expected = [
-            {name: 'object_name1'},
-            {name: 'object_name2'}
+            { name: 'object_name1' },
+            { name: 'object_name2' },
           ]
 
           cursor.each do |data|
             expect(data).to eq(expected.shift.stringify_keys)
           end
+        end
+      end
+
+      describe '#reload' do
+        it 'makes request again' do
+          original_objects = cursor.to_a
+          reloaded_objects = cursor.reload.to_a
+          expect(original_objects).to eq(reloaded_objects)
+          expect(request).to have_been_made.twice
         end
       end
     end
@@ -52,13 +60,13 @@ RSpec.describe SquareLite::GenericClient::Cursor do
 
       it 'yields object data' do
         cursor.each do |data|
-          expect(data).to eq({'name' => 'object_name'})
+          expect(data).to eq('name' => 'object_name')
         end
       end
 
       context 'without related_objects' do
         it 'yields nil' do
-          cursor.each do |data, related|
+          cursor.each do |_data, related|
             expect(related).to eq(nil)
           end
         end
@@ -66,7 +74,6 @@ RSpec.describe SquareLite::GenericClient::Cursor do
     end
 
     context 'with related_objects' do
-      #let(:request) { stub_sq(path, :post, body: resp_body) }
       let(:resp_body) { build_body(**objects.merge(related)) }
       let(:request_params) { { include_related_objects: true } }
 
@@ -74,10 +81,10 @@ RSpec.describe SquareLite::GenericClient::Cursor do
 
       it 'yields the related_objects' do
         related_arg = {
-          'related_obj_id' => [{ 'id' => 'related_obj_id' }]
+          'related_obj_id' => [{ 'id' => 'related_obj_id' }],
         }
 
-        cursor.each do |data, related_data|
+        cursor.each do |_data, related_data|
           expect(related_data).to eq(related_arg)
         end
       end
@@ -93,8 +100,8 @@ RSpec.describe SquareLite::GenericClient::Cursor do
 
     it 'memoizes network requests' do
       expected = [
-        {'name' => 'object_name1'},
-        {'name' => 'object_name2'}
+        { 'name' => 'object_name1' },
+        { 'name' => 'object_name2' },
       ]
 
       expect_req_body(request1, nil)
@@ -103,7 +110,7 @@ RSpec.describe SquareLite::GenericClient::Cursor do
 
       WebMock.reset!
 
-      expect_req_body(request2, {cursor: 'cursor_value'})
+      expect_req_body(request2, cursor: 'cursor_value')
       expect(cursor.to_a).to eq(expected)
       expect(request2).to have_been_made
     end
