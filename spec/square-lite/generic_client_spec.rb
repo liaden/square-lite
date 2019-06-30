@@ -23,6 +23,15 @@ RSpec.describe SquareLite::GenericClient do
         end
         expect(request).to have_been_made
       end
+
+      it 'can override auto_paginate' do
+        client.auto_paginate!
+
+        request = client.request(:get, 'not/real', paginate: false)
+
+        expect(request).to_not be_an(Enumerable)
+        expect(request).to_not be_nil
+      end
     end
 
     it 'returns Typhoeus::Request' do

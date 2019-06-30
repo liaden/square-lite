@@ -26,7 +26,7 @@ module SquareLite
 
     def request(http_method, path, opts={})
       url      = build_request_url(path)
-      paginate = opts.delete(:paginate)
+      paginate = paginating?(opts)
 
       req_opts = {
         method:          http_method.to_sym.downcase,
@@ -42,7 +42,7 @@ module SquareLite
 
       puts "Request options: #{req_opts}" if SquareLite.debug?
       request = Typhoeus::Request.new(url, req_opts)
-      return request unless paginate || auto_paginate?
+      return request unless paginate
 
       Cursor.new(request, opts[:params])
     end
@@ -59,6 +59,11 @@ module SquareLite
 
     def header_params(opts)
       default_headers.merge(opts[:header_params] || {})
+    end
+
+    def paginating?(opts)
+      paginate = opts.delete(:paginate)
+      paginate || auto_paginate? unless paginate == false
     end
 
     def insert_params(req_opts, params)
