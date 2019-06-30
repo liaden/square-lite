@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+
+require 'simplecov'
+SimpleCov.start do
+  add_filter /spec/
+end
+
 require 'oj'
 require 'webmock/rspec'
 require 'square-lite'
 
 require 'pry'
 require 'active_support/core_ext/hash'
+require 'money'
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 

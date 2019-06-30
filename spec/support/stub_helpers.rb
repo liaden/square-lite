@@ -16,6 +16,11 @@ def sq_resp(body={}, status: 200, headers: {})
   { body: body.to_json, headers: headers, status: status }
 end
 
+def req_params_are(params)
+  # let(:request) { .... }
+  expect_req_body(request, params)
+end
+
 # expect the request body is a superset of params
 def expect_req_body(request, params)
   request.with do |r|
@@ -32,7 +37,6 @@ def build_body(cursor: nil, errors: [], **data)
   data['errors'] = errors
   data
 end
-
 
 def json_headers
   { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }

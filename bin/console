@@ -4,6 +4,9 @@ require "bundler/setup"
 
 require "oj"
 require "pry"
+require "money"
 require "square-lite"
+
+client = SquareLite::Client.new(ENV['SQUARE_ACCESS_TOKEN'])
 
 Pry.start

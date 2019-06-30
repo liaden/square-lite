@@ -3,7 +3,7 @@
 require_relative 'generic_client'
 
 class SquareLite::Client
-  attr_accessor :access_token, :version
+  attr_accessor :access_token, :version, :default
 
   def enabled?
     @access_token != nil
@@ -14,12 +14,16 @@ class SquareLite::Client
     @version      = SquareLite::SQUARE_API_VERSION
   end
 
-  def search(options={ for: [] })
-    SquareLite::Search.new(*Array(options[:for]), as: generic_client)
+  def search(*resources)
+    SquareLite::Search.new(generic_client).for(*resources)
   end
 
   def delete
     SquareLite::Delete.new(generic_client, search)
+  end
+
+  def create(resource=nil)
+    SquareLite::Create.new(generic_client, search).for(resource)
   end
 
   private

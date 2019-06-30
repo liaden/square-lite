@@ -19,3 +19,11 @@ end
 def using_default_test_token?
   test_token == default_test_token
 end
+
+def build_generic_client
+  SquareLite::GenericClient.new(nil, build_auth)
+end
+
+def build_client
+  SquareLite::Client.new(test_token)
+end

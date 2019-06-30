@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def build_search
-  SquareLite::Client.new(test_token).search
+  SquareLite::Client.new(test_token).search.catalog
 end
 
 def stub_search(resp=:default_resp)

@@ -1,0 +1,53 @@
+---
+:nested_attrs:
+  :category:
+    - name
+  :discount:
+    - name
+    - discount_type
+    - percentage
+    - amount_money
+    - pin_required
+    - label_color
+  :item:
+    - name
+    - description
+    - abbreviation
+    - label_color
+    - available_online
+    - available_for_pickup
+    - available_electronically
+    - category_id
+    - tax_ids
+    - skip_modifier_screen
+  :item_variation:
+    - name
+    - item_id
+    - sku
+    - upc
+    - ordinal
+    - pricing_type
+    - price_money
+    - location_overrides
+    - inventory_alert_type
+    - inventory_alert_threshold
+    - user_data
+    - service_duration
+    - catalog_measurement_unit_id
+    - measurement_unit_id
+  :modifier:
+    - name
+    - price_money
+  :tax:
+    - name
+:catalog_object_attrs:
+  - type
+  - id
+  - updated_at
+  - version
+  - is_deleted
+  - catalog_v1_ids
+  - present_at_all_locations
+  - present_at_location_ids
+  - absent_at_location_ids
+  - image_id

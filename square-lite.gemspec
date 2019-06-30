@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency  'multi_json'
   spec.add_dependency  'typhoeus'
+  spec.add_dependency  'money'
   spec.add_dependency  'gem_config'
 
   spec.add_development_dependency 'bundler', '~> 1.17'
@@ -49,4 +50,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-performance'
   spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'activesupport'
+  spec.add_development_dependency 'simplecov'
 end

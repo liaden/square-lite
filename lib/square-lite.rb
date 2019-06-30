@@ -41,7 +41,8 @@ module SquareLite
 end
 
 require_relative 'square-lite/client'
+require_relative 'square-lite/create'
 require_relative 'square-lite/delete'
 require_relative 'square-lite/search'
 require_relative 'square-lite/version'
-
+require_relative 'square-lite/converter'

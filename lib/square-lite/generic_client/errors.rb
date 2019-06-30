@@ -5,14 +5,10 @@ module SquareLite
     attr_accessor :request, :errors
 
     def initialize(request, errors)
-      @errors  = errors
       @request = request
+      @errors  = errors
 
-      super("SquareConnect API returned errors:\n#{errors_list_string}")
-    end
-
-    def errors_list_string
-      @errors.map(&:to_json).join("\n")
+      super("SquareConnect API returned errors:\n#{@errors.join("\n")}")
     end
   end
 end
