@@ -43,6 +43,8 @@ module SquareLite::Converter
 
     def self.from_square_monies(data)
       {}.tap do |result|
+        result['pricing_type'] = :variable if data['pricing_type'] == 'VARIABLE_PRICING'
+
         SQUARE_MONEY_ATTRS.each_with_object(result) do |key, acc|
           money = data[key] || data[key.to_sym]
 
@@ -52,14 +54,23 @@ module SquareLite::Converter
     end
 
     def self.to_square_monies(data)
-      {}.tap do |result|
-        SQUARE_MONEY_ATTRS.each_with_object(result) do |key, acc|
-          mkey  = money_key(key)
-          money = data[mkey] || data[mkey.to_sym]
+      result = {}
 
-          acc[key.to_sym] = to_square_money(money) if money
+      pricing_type = data[:pricing_type] || data['pricing_type']
+
+      result[:pricing_type] = :VARIABLE_PRICING if pricing_type.to_s.match?(/variable/i)
+
+      SQUARE_MONEY_ATTRS.each_with_object(result) do |key, acc|
+        mkey  = money_key(key)
+        money = data[mkey] || data[mkey.to_sym]
+
+        if money
+          acc[:pricing_type] = :FIXED_PRICING
+          acc[key.to_sym]    = to_square_money(money)
         end
       end
+
+      result
     end
 
     def self.from_square_monies!(data)

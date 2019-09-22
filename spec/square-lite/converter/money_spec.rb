@@ -77,6 +77,12 @@ RSpec.describe SquareLite::Converter::Money do
       it { is_expected.to include('price') }
       it { is_expected.to_not include('price_money', :price_money) }
     end
+
+    context 'variable pricing' do
+      subject { described_class.from_square_monies('pricing_type' => 'VARIABLE_PRICING') }
+
+      it { is_expected.to include('pricing_type' => :variable) }
+    end
   end
 
   describe '.to_square_monies' do
@@ -97,6 +103,20 @@ RSpec.describe SquareLite::Converter::Money do
 
       it { is_expected.to include(:price_money) }
       it { is_expected.to_not include('price', :price) }
+    end
+
+    context 'variable pricing' do
+      ['variable', 'VARIABLE', :variable, 'variable_pricing'].each do |type|
+        subject { described_class.to_square_monies(pricing_type: type) }
+
+        it { is_expected.to eq(pricing_type: :VARIABLE_PRICING) }
+      end
+    end
+
+    context 'no price specified' do
+      it 'returns empty' do
+        expect(described_class.to_square_monies({})).to eq({})
+      end
     end
   end
 
