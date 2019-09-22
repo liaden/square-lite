@@ -105,4 +105,26 @@ RSpec.describe SquareLite::Converter::Catalog do
       end
     end
   end
+
+  describe 'from Square format' do
+    let(:object_wrapper) do
+      {
+        type:                     typename,
+        id:                       '12345',
+        version:                  1,
+        is_deleted:               false,
+        present_at_all_locations: true,
+      }.deep_stringify_keys!
+    end
+
+    let(:resource)       { typename.downcase }
+    let(:square_attrs)   { object_wrapper.merge("#{typename.downcase}_data" => resource_attrs) }
+    let(:resource_attrs) { { name: "test-#{typename.dowcase}" } }
+
+    describe '.from_category' do
+      let(:typename) { 'CATEGORY' }
+
+      subject { described_class.send("from_#{resource}", square_attrs) }
+    end
+  end
 end
