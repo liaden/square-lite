@@ -40,7 +40,7 @@ module SquareLite
       }
       insert_params(req_opts, opts[:params])
 
-      puts "Request options: #{req_opts}" if SquareLite.debug?
+      log_request(url, req_opts)
       request = Typhoeus::Request.new(url, req_opts)
       return request unless paginate
 
@@ -82,6 +82,17 @@ module SquareLite
       return data if data.nil? || data.is_a?(String)
 
       data.to_json
+    end
+
+    def log_request(url, req_opts)
+      return unless SquareLite.debug?
+
+      debug_data = {
+        request_options: req_opts,
+        url:             url,
+      }
+
+      pp debug_data
     end
   end
 end
