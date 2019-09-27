@@ -8,6 +8,7 @@ class SquareLite::Search
     include SquareLite::Search::WithDeleted
     include SquareLite::Search::Since
     include SquareLite::Search::Limit
+    include SquareLite::Search::Ordered
 
     def initialize(client, *types)
       @client = client
@@ -95,15 +96,7 @@ class SquareLite::Search
     end
 
     def ordered(data)
-      data = { data => 'DESC' } unless data.is_a?(Hash)
-
-      ordering = data.values.first.to_s.upcase
-      raise SquareLite::AmbiguousOrderingError.new(data.keys) if data.size > 1
-      raise SquareLite::UnknownOrderingError.new(data.values.first) unless ['ASC', 'DESC'].include?(ordering)
-
-      query(:sorted_attribute_query,
-            attribute_name: data.keys.first,
-            sort_order:     data.values.first.to_s.upcase)
+      query(:sorted_attribute_query, sanitize_ordering(data, :attribute_name))
     end
 
     def params
