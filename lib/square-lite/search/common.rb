@@ -8,6 +8,7 @@ class SquareLite::Search
     def initialize(requester, params)
       @requester  = requester
       self.params = params.slice(*self.class.expected_params)
+      self.params.merge!(rename_params(params))
     end
 
     def request
@@ -26,9 +27,24 @@ class SquareLite::Search
 
     def validate!; end
 
+    def rename_params(params)
+      mappings = self.class.rename_params
+      result = params.slice(*mappings.keys)
+      result.transform_keys! { |k| mappings[k] }
+      result
+    end
+
     module ClassMethods
       def expected_params
         @expected_params ||= []
+      end
+
+      def rename_param(mapping)
+        rename_params[mapping.keys.first] = mapping.values.first
+      end
+
+      def rename_params
+        @rename_params ||= {}
       end
 
       attr_accessor :verb
