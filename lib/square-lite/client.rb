@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'generic_client'
+require_relative 'hash_utils'
 
 class SquareLite::Client
   attr_accessor :access_token, :version, :default
