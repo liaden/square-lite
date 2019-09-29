@@ -1,0 +1,16 @@
+---
+:states:
+  - :OPEN
+  - :COMPLETED
+  - :CANCELED
+:fulfillment_types:
+  - :PICKUP
+  - :SHIPMENT
+:fullfillment_states:
+  - :PROPOSED
+  - :RESERVED
+  - :PREPARED
+  - :COMPLETED
+  - :CANCELED
+  - :FAILED
+

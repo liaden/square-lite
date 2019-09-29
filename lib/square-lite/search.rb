@@ -9,10 +9,11 @@ require_relative 'search/with_related'
 require_relative 'search/with_deleted'
 require_relative 'search/since'
 require_relative 'search/limit'
+require_relative 'search/time_range'
 require_relative 'search/ordered'
 
 require_relative 'search/catalog'
-require_relative 'search/order'
+require_relative 'search/orders'
 require_relative 'search/customers'
 
 class SquareLite::Search
@@ -77,8 +78,8 @@ class SquareLite::Search
     # TODO
   end
 
-  def order
-    # TODO
+  def orders(at: nil)
+    Orders.new(@client, at: Array(at))
   end
 
   def customers

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe SquareLite::Search::Catalog do
   let(:search_types) { ['item'] }
-  let(:search)  { build_search.for(*search_types) }
+  let(:search)  { build_search(:catalog).for(*search_types) }
   let(:neg_inf) { Float::INFINITY * -1 }
   let(:inf)     { Float::INFINITY }
 

@@ -27,6 +27,30 @@ module SquareLite
     end
   end
 
+  class TimeRangeError < InvalidSearchError
+    def initialize(options)
+      super("Ambiguous options: #{options}")
+    end
+  end
+
+  class TooFewError < InvalidSearchError
+    def self.validate!(items, key, min)
+      raise new("Too few items for #{key}: at least #{min}, got #{items.size}") if items.size < min
+    end
+  end
+
+  class TooManyError < InvalidSearchError
+    def self.validate!(items, key, max)
+      raise new("Too many items for #{key}: at most #{max}, got #{items.size}") if items.size > max
+    end
+  end
+
+  class MismatchedParams < InvalidSearchError
+    def initialize(params)
+      super(params.inspect)
+    end
+  end
+
   class EmptyRangeError < InvalidSearchError
     def initialize(range)
       super("Empty range specified: #{range}")

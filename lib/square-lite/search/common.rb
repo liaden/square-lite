@@ -5,7 +5,7 @@ class SquareLite::Search
     attr_accessor :params, :verb
     attr_reader   :requester
 
-    def initialize(requester, params)
+    def initialize(requester, params = {})
       @requester  = requester
       self.params = params.slice(*self.class.expected_params)
       self.params.merge!(rename_params(params))
