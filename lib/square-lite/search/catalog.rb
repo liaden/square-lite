@@ -1,25 +1,24 @@
 # frozen_string_literal: true
 
 class SquareLite::Search
-  class Catalog
-    include SquareLite::Search::Common
-    include SquareLite::Search::ForTypes
-    include SquareLite::Search::WithRelated
-    include SquareLite::Search::WithDeleted
-    include SquareLite::Search::Since
-    include SquareLite::Search::Limit
-    include SquareLite::Search::Ordered
+  class Catalog < Base
+    include ForTypes
+    include WithRelated
+    include WithDeleted
+    include Since
+    include Limit
+    include Ordered
 
-    def initialize(client, *types)
-      @client = client
+    def initialize(requester, *types)
+      super(requester)
       self.for(*types.compact)
     end
 
     def id(value, *values)
       if values.any?
-        SquareLite::Search::Catalog::Ids.new(@client, params.merge(object_ids: [value] + values))
+        Ids.new(@requester, params.merge(object_ids: [value] + values))
       else
-        SquareLite::Search::Catalog::Id.new(@client, params.merge(object_id: value))
+        Id.new(@requester, params.merge(object_id: value))
       end
     end
 
@@ -28,7 +27,7 @@ class SquareLite::Search
     end
 
     def all
-      SquareLite::Search::Catalog::All.new(@client, params)
+      All.new(@requester, params)
     end
 
     def all!
@@ -106,8 +105,8 @@ class SquareLite::Search
     private
 
     def query(search_type, search_params)
-      search_params = params.merge(query: { search_type => search_params })
-      SquareLite::Search::Catalog::Query.new(@client, search_params)
+      self.params = params.merge(query: { search_type => search_params })
+      transition(Query)
     end
   end
 end

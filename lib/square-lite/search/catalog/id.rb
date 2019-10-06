@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class SquareLite::Search::Catalog
-  class Id
-    include SquareLite::Search::Common
-    include SquareLite::Search::WithRelated
+  class Id < Base
+    include WithRelated
 
     self.verb = :get
 

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe SquareLite::Search::Common do
-  let(:thing_class) { Class.new { include SquareLite::Search::Common } }
+  let(:thing_class) { Class.new(SquareLite::Search::Base) }
   let(:thing)       { thing_class.new(client, params) }
   let(:client)      { nil }
   let(:params)      { {} }

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class SquareLite::Search::Catalog
-  class All
-    include SquareLite::Search::Common
-    include SquareLite::Search::ForTypes
+  class All < SquareLite::Search::Base
+    include ForTypes
 
     expected_params << :types
     self.verb = :get

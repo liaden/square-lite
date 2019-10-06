@@ -5,7 +5,7 @@ def build_search(type)
 end
 
 def stub_search(resp=:default_resp)
-  let!(:request) { stub_sq('v2/catalog/search', :post, resp) }
+  let!(:request) { stub_sq('v2/catalog/search', :post, resp.dup) }
 end
 
 # catalog specific

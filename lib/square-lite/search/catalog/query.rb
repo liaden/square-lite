@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class SquareLite::Search::Catalog
-  class Query
-    include SquareLite::Search::Common
-    include SquareLite::Search::ForTypes
-    include SquareLite::Search::WithRelated
-    include SquareLite::Search::WithDeleted
-    include SquareLite::Search::Since
-    include SquareLite::Search::Limit
+  class Query < SquareLite::Search::Base
+    include ForTypes
+    include WithRelated
+    include WithDeleted
+    include Since
+    include Limit
 
     expected_params << :object_types
     expected_params << :query
@@ -25,7 +24,7 @@ class SquareLite::Search::Catalog
       super
 
       no_object_types = params[:object_types].nil? || params[:object_types].empty?
-      raise SquareLite::MissingForTypeError.new if no_object_types
+      raise MissingForTypeError.new if no_object_types
     end
 
     def types=(val)

@@ -33,6 +33,14 @@ module SquareLite
     end
   end
 
+  class UnknownSourceError < InvalidSearchError
+    def self.validate!(valid_items, selected_items, type)
+      unknown_sources = selected_items - valid_items
+
+      raise new("Unknown sources #{unknown_sources} specified for #{type}.") if unknown_sources.any?
+    end
+  end
+
   class TooFewError < InvalidSearchError
     def self.validate!(items, key, min)
       raise new("Too few items for #{key}: at least #{min}, got #{items.size}") if items.size < min

@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class SquareLite::Search::Catalog
-  class Ids
-    include SquareLite::Search::Common
-
+  class Ids < Base
     self.verb = :post
 
     expected_params << :order_ids

@@ -1,10 +1,9 @@
 using SquareLite::HashUtils
 
 class SquareLite::Search
-  class Orders
-    include SquareLite::Search::Common
-    include SquareLite::Search::Limit
-    include SquareLite::Search::Ordered
+  class Orders < Base
+    include Limit
+    include Ordered
 
     yml_data = YAML.load_file('config/square/order.yml')
 

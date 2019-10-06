@@ -3,7 +3,7 @@
 class SquareLite::Search; end
 
 require_relative 'search/errors'
-require_relative 'search/common'
+require_relative 'search/base'
 require_relative 'search/for_types'
 require_relative 'search/with_related'
 require_relative 'search/with_deleted'
@@ -74,19 +74,19 @@ class SquareLite::Search
     Catalog.new(@client, :variant)
   end
 
-  def transaction
-    # TODO
-  end
-
   def orders(at: nil)
     Orders.new(@client, at: Array(at))
   end
 
   def customers
-    Customers.new(@client)
+    Customers.new(@client, {})
   end
 
   def location
     # TODO
+  end
+
+  def self.const_missing(const)
+    SquareLite.const_get(const) if SquareLite.const_defined?(const)
   end
 end

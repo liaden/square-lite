@@ -2,7 +2,7 @@
 
 class SquareLite::Search
   module Ordered
-    ORDERINGS = [ 'ASC', 'DESC' ].freeze
+    ORDERINGS = ['ASC', 'DESC'].freeze
 
     def sanitize_ordering(data, attribute_field_key_name)
       data = { data => 'DESC' } unless data.is_a?(Hash)
