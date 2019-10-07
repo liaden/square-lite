@@ -74,14 +74,14 @@ class SquareLite::Search
 
     # Square API requires ordering to match, thus we set it
     def closed(opts={})
-      ordered(:closed)
+      ordered(:closed_at)
       date_time_filter(:closed_at, time_range(opts[:on], opts[:during], opts[:since], opts[:until]))
       self
     end
 
     # Square API requires ordering to match, thus we set it
     def created(opts={})
-      ordered(:created)
+      ordered(:created_at)
       date_time_filter(:created_at, time_range(opts[:on], opts[:during], opts[:since], opts[:until]))
       self
     end
@@ -97,14 +97,14 @@ class SquareLite::Search
     # Note: This also intentionally causes the error where we set one date_time_filter
     # and then another
     def ordered(data)
-      data = sanitize_ordering(data, :sort_field)
+      field, ordering = sanitize_ordering(data, field_suffix: :AT)
 
       dtf = params.dig(:query, :filter, :date_time_filter) || {}
-      if (dtf.keys - [data[:sort_field]]).any?
+      if (dtf.keys - [field]).any?
         raise SquareLite::MismatchedParams.new(sort_field: data, date_time_filter: dtf)
       end
 
-      params.bury(:query, :sort, data)
+      params.bury(:query, :sort, sort_field: field, sort_order: ordering)
       self
     end
 

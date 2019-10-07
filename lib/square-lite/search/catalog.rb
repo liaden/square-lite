@@ -95,7 +95,10 @@ class SquareLite::Search
     end
 
     def ordered(data)
-      query(:sorted_attribute_query, sanitize_ordering(data, :attribute_name))
+      field, ordering = sanitize_ordering(data)
+
+      # TODO: I think this is gonna fail on there being no initial_attribute_value
+      query(:sorted_attribute_query, attribute_name: field, sort_order: ordering)
     end
 
     def params

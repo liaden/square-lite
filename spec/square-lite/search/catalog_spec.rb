@@ -267,7 +267,7 @@ RSpec.describe SquareLite::Search::Catalog do
           object_types: ['ITEM'],
           query:        {
             sorted_attribute_query: {
-              attribute_name: 'name',
+              attribute_name: 'NAME',
               sort_order:     expected_order_value,
             },
           },
